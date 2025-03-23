@@ -1,0 +1,3 @@
+<template>
+  Upload View
+</template>
