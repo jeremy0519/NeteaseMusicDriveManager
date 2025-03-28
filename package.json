@@ -16,6 +16,7 @@
     "@tailwindcss/vite": "^4.0.15",
     "axios": "^1.8.4",
     "chroma-js": "^3.1.2",
+    "cookie": "^1.0.2",
     "daisyui": "^5.0.9",
     "iconify-icon": "^2.3.0",
     "pinia": "^3.0.1",

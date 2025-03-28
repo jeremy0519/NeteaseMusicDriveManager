@@ -18,6 +18,7 @@ import { axios_instance } from '@/main'
 import { useUserStore } from '@/stores/user'
 import { ref, onMounted, onUnmounted } from 'vue'
 import chroma from 'chroma-js'
+import * as cookietool from 'cookie'
 import QRCode from 'qrcode'
 
 const store = useUserStore()
@@ -125,18 +126,15 @@ async function checkStatus(key: string) {
 }
 
 // 第四步 登录
-async function nowLogin(cookie = '') {
+async function nowLogin(cookie: string = '') {
   try {
     const res = await axios_instance.post(`/login/status?timestamp=${Date.now()}`, {
-      data: {
-        cookie,
-      },
+      cookie: cookie,
     })
     console.log(res.data)
     successMessage.value = '登录成功'
-    setTimeout(() => {
-      store.logIn(res.data.data.account.id, cookie)
-    }, 3000)
+    const wanted = cookietool.parse(cookie)
+    setTimeout(() => store.logIn(res.data.data.account.id, 'MUSIC_U=' + wanted.MUSIC_U || ''), 3000)
   } catch (error) {
     if (error instanceof Error) {
       errorMessage.value = 'Error during login: ' + error.message

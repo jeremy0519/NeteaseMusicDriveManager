@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, defineAsyncComponent } from 'vue'
 const currentTab = ref('Home')
-import HomeView from '@/views/HomeView.vue'
-import UploadView from '@/views/UploadView.vue'
+const HomeView = defineAsyncComponent(() => import('@/views/HomeView.vue'))
+const UploadView = defineAsyncComponent(() => import('@/views/UploadView.vue'))
 import { useUserStore } from './stores/user'
 const store = useUserStore()
 onMounted(() => {
@@ -29,7 +29,7 @@ onMounted(() => {
     </div>
     <div class="navbar-end">
       <button class="btn btn-ghost btn-circle pe-6" v-if="store.isLogIn" @click="store.logOut">
-        <iconify-icon icon="mdi:logout" width="18" height="18"></iconify-icon>
+        <iconify-icon icon="mdi:logout" width="auto" height="auto"></iconify-icon>
       </button>
     </div>
   </div>
