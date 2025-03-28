@@ -1,21 +1,37 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 const currentTab = ref('Home')
 import HomeView from '@/views/HomeView.vue'
 import UploadView from '@/views/UploadView.vue'
+import { useUserStore } from './stores/user'
+const store = useUserStore()
+onMounted(() => {
+  store.initialize() //需要初始化store
+})
 </script>
 
 <template>
-  <!-- name of each tab group should be unique -->
-  <div class="tabs tabs-border flex justify-center">
-    <label class="tab">
-      <input type="radio" name="my_tabs" value="Home" v-model="currentTab" />
-      <iconify-icon icon="mdi:home"></iconify-icon> 首页
-    </label>
-    <label class="tab">
-      <input type="radio" name="my_tabs" value="Upload" v-model="currentTab" />
-      <iconify-icon icon="mdi:upload"></iconify-icon> 上传
-    </label>
+  <div class="navbar bg-base-100 shadow-sm">
+    <div class="navbar-start">
+      <a class="btn btn-ghost text-xl">Cloud Drive Manager</a>
+    </div>
+    <div class="navbar-center">
+      <div class="tabs tabs-border">
+        <label class="tab">
+          <input type="radio" name="my_tabs" value="Home" v-model="currentTab" />
+          <iconify-icon icon="mdi:home"></iconify-icon> 首页
+        </label>
+        <label class="tab">
+          <input type="radio" name="my_tabs" value="Upload" v-model="currentTab" />
+          <iconify-icon icon="mdi:upload"></iconify-icon> 上传
+        </label>
+      </div>
+    </div>
+    <div class="navbar-end">
+      <button class="btn btn-ghost btn-circle pe-6" v-if="store.isLogIn" @click="store.logOut">
+        <iconify-icon icon="mdi:logout" width="18" height="18"></iconify-icon>
+      </button>
+    </div>
   </div>
 
   <HomeView v-if="currentTab == 'Home'" />
