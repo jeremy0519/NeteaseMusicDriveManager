@@ -1,3 +1,1 @@
-# NeteaseMusicDriveManager
-
-网易云云盘管理工具
+新版，但是烂尾了
